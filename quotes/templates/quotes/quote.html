@@ -1,0 +1,18 @@
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+    <h1>Quote of the Day</h1>
+    
+    <blockquote>
+        <p>"{{ quote }}"</p>
+    </blockquote>
+    
+    <img src="{% static image %}" alt="Batman">
+    
+    <p><a href="{% url 'quote' %}">Get another quote</a></p>
+</div>
+
+{% endblock %}
