@@ -5,7 +5,7 @@ import random
  
 # Create your views here.
 
-quotes = [
+quotes = [ 
     "I'm Batman.",
     "You either die a hero, or you live long enough to see yourself become the villain.",
     "It's not who I am underneath, but what I do that defines me.",
@@ -56,6 +56,6 @@ def show_all(request):
 
 def about(request):
     '''
-    Display information about Batman and the creator.
+    Display information about Batman.
     '''
     return render(request, 'quotes/about.html')

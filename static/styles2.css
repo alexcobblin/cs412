@@ -1,0 +1,85 @@
+body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf8f3;
+    color: #333;
+}
+
+/* Main content container */
+div {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+/* Restaurant name */
+h1 {
+    color: #9e8400;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    font-family: 'Raleway', cursive;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Section headers */
+h2 {
+    color: #9e8400;
+    border-bottom: 2px solid #b49472;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    font-size: 1.5em;
+}
+
+/* Restaurant image */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 30px auto;
+    border-radius: 10px;
+}
+
+/* Location text */
+p {
+    font-size: 1.1em;
+    line-height: .5;
+    margin: 15px 0;
+}
+
+/* Hours list */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+ul li {
+    padding: 10px 15px;
+    margin: 5px 0;
+    background-color: #fdf8f3;
+    border-left: 2px solid #754320;
+    border-right: 2px solid #754320;
+    border-top: 1px solid #b49472;
+    border-bottom: 1px solid #b49472;
+    font-size: 1.1em;
+}
+
+/* Order button link */
+a {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #754320;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+a:hover {
+    background-color: #754320;
+}

@@ -1,0 +1,21 @@
+<!-- restaurant/templates/restaurant/main.html -->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <p><a href="{% url 'order' %}">Order Online</a></p>
+    <h1>Welcome to The Golden Hairball!</h1>
+    <img src="{% static 'restaurant/images/hairball.jpg' %}" alt="Restaurant photo">
+    
+    <h2>Address</h2>
+    <p>29 Pickadilly Lane, London, England</p>
+    
+    <h2>Hours of Operation</h2>
+    <ul>
+        <li>Monday-Saturday: 9am - 5pm</li>
+        <li>Sunday: 3am - 1am</li>
+    </ul>
+
+</div>
+{% endblock %}
