@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "hw", # new app
     "quotes",
     "restaurant",
+    "mini_insta",
 ]
 
 MIDDLEWARE = [
