@@ -3,7 +3,7 @@
  
  
 #from django.shortcuts import render
-from .models import Article
+from .models import Article, Profile
 from django.views.generic import ListView, DetailView
 import random
  
@@ -36,3 +36,11 @@ class RandomArticleView(DetailView):
  
         all_articles = Article.objects.all()
         return random.choice(all_articles)
+class ProfileListView(ListView):
+    model = Profile
+    template_name = 'mini_insta/show_all_profiles.html'
+    context_object_name = 'profiles'
+class ProfileView(DetailView):
+    model = Profile
+    template_name = 'mini_insta/show_profile.html' ## reusing same template!!
+    context_object_name = 'profile'
