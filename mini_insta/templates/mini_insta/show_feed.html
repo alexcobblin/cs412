@@ -19,6 +19,8 @@
         <a href="{% url 'post' pk=post.pk %}">
             <img src="{{photos.first.get_image_url}}" alt="post image">
         </a>
+        {% else %}
+        {% endif %}
         {% endwith %}
 
         <div>
@@ -26,6 +28,7 @@
         <p>{{post.caption}}</p>
         <small>{{post.timestamp}}</small>
 
+        <!-- comments -->
         {% for comment in post.get_all_comments %}
         <p><strong>{{comment.profile.display_name}}</strong> {{comment.text}}</p>
         {% endfor %}
