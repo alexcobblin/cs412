@@ -1,0 +1,29 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main class="grid-container">
+
+    <h2 style="grid-column: span 3;">{{profile.display_name}} is Following</h2>
+    <p style="grid-column: span 3;"><a href="{% url 'profile' pk=profile.pk %}">&larr; Back to Profile</a></p>
+
+    {% for followed in profile.get_following %}
+    <article>
+        {% if followed.profile_image_url %}
+        <a href="{% url 'profile' pk=followed.pk %}">
+            <img src="{{followed.profile_image_url}}" alt="{{followed.display_name}}">
+        </a>
+        {% endif %}
+
+        <div>
+        <h2><a href="{% url 'profile' pk=followed.pk %}">{{followed.display_name}}</a></h2>
+        <strong>@{{followed.username}}</strong>
+        <p>{{followed.bio_text}}</p>
+        </div>
+    </article>
+
+    {% empty %}
+    <p style="grid-column: span 3;">Not following anyone.</p>
+    {% endfor %}
+
+</main>
+{% endblock %}

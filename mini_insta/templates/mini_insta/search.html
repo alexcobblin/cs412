@@ -1,0 +1,14 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main>
+
+    <h2>Search</h2>
+
+    <form action="{% url 'search' pk=profile.pk %}" method="GET">
+        <input type="text" name="query" placeholder="Search profiles and posts">
+        <input type="submit" value="Search">
+    </form>
+
+</main>
+{% endblock %}

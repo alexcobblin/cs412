@@ -3,19 +3,48 @@
 
 {% block content %}
 <main class="grid-container">
+
     <article class="featured">
         {% if profile.profile_image_url %}
-		<img src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}">
+        <img src="{{profile.profile_image_url}}" alt="{{profile.profile_image_url}}">
         {% endif %}
-        
+
         <div>
-        <strong>by {{profile.username}} at {{profile.join_date}}</strong>
-        <p>
-        {{profile.bio_text}}
-        </p>
+        <h2>{{profile.display_name}}</h2>
+        <strong>@{{profile.username}} &middot; joined {{profile.join_date}}</strong>
+        <p>{{profile.bio_text}}</p>
+
+        <div class="follow-stats">
+            <a href="{% url 'followers' pk=profile.pk %}">{{profile.get_num_followers}} Followers    </a>
+            <a href="{% url 'following' pk=profile.pk %}">{{profile.get_num_following}} Following</a>
+        </div>
+
+        <p><a href="{% url 'update_profile' pk=profile.pk %}">Update Profile</a></p>
         </div>
     </article>
- 
- 
+
+    <h2 style="grid-column: span 3;">Posts</h2>
+
+    {% for post in profile.get_all_posts %}
+    <article>
+        <a href="{% url 'post' pk=post.pk %}">
+            {% with photos=post.get_all_photos %}
+            {% if photos %}
+            <img src="{{photos.first.get_image_url}}" alt="post image">
+            {% endif %}
+            {% endwith %}
+        </a>
+
+        <div>
+        <p>{{post.caption}}</p>
+        <strong>{{post.timestamp}}</strong>
+        <p><a href="{% url 'post' pk=post.pk %}">View Post &rarr;</a></p>
+        </div>
+    </article>
+
+    {% empty %}
+    <p style="grid-column: span 3;">No posts yet.</p>
+    {% endfor %}
+
 </main>
 {% endblock %}

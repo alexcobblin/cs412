@@ -1,0 +1,52 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main class="grid-container">
+
+    <h2>Search Results for "{{query}}"</h2>
+    <p><a href="{% url 'search' pk=profile.pk %}">&larr; New Search</a></p>
+
+    <h3>Profiles</h3>
+    {% for p in profiles %}
+    <article>
+        {% if p.profile_image_url %}
+        <a href="{% url 'profile' pk=p.pk %}">
+            <img src="{{p.profile_image_url}}" alt="{{p.display_name}}">
+        </a>
+        {% endif %}
+
+        <div>
+        <h2><a href="{% url 'profile' pk=p.pk %}">{{p.display_name}}</a></h2>
+        <strong>@{{p.username}}</strong>
+        <p>{{p.bio_text}}</p>
+        </div>
+    </article>
+
+    {% empty %}
+    <p>No profiles match "{{query}}".</p>
+    {% endfor %}
+
+    <h3>Posts</h3>
+    {% for post in posts %}
+    <article>
+        {% with photos=post.get_all_photos %}
+        {% if photos %}
+        <a href="{% url 'post' pk=post.pk %}">
+            <img src="{{photos.first.get_image_url}}" alt="post image">
+        </a>
+        {% endif %}
+        {% endwith %}
+
+        <div>
+        <p>{{post.caption}}</p>
+        <small>by {{post.profile.display_name}} at {{post.timestamp}}</small>
+        <p><a href="{% url 'post' pk=post.pk %}">View Post &rarr;</a></p>
+        </div>
+    </article>
+
+    {% empty %}
+    <p>No posts match "{{query}}".</p>
+    {% endfor %}
+
+</main>
+{% endblock %}

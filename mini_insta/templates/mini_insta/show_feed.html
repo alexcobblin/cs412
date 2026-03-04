@@ -1,0 +1,42 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<main class="grid-container">
+
+    <h2>Your Feed</h2>
+
+    {% for post in posts %}
+    <article>
+        <div>
+            {% if post.profile.profile_image_url %}
+            <img src="{{post.profile.profile_image_url}}" alt="{{post.profile.display_name}}" style="width:40px; height:40px; border-radius:50%;">
+            {% endif %}
+            <strong><a href="{% url 'profile' pk=post.profile.pk %}">{{post.profile.display_name}}</a></strong>
+        </div>
+
+        {% with photos=post.get_all_photos %}
+        {% if photos %}
+        <a href="{% url 'post' pk=post.pk %}">
+            <img src="{{photos.first.get_image_url}}" alt="post image">
+        </a>
+        {% endwith %}
+
+        <div>
+        <h3>{{post.get_likes.count}} Likes</h3>
+        <p>{{post.caption}}</p>
+        <small>{{post.timestamp}}</small>
+
+        {% for comment in post.get_all_comments %}
+        <p><strong>{{comment.profile.display_name}}</strong> {{comment.text}}</p>
+        {% endfor %}
+
+        <p><a href="{% url 'post' pk=post.pk %}">View Post &rarr;</a></p>
+        </div>
+    </article>
+
+    {% empty %}
+    <p>No posts in your feed. Follow some profiles to see their posts here!</p>
+    {% endfor %}
+
+</main>
+{% endblock %}

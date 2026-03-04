@@ -5,12 +5,23 @@
         <link rel="stylesheet" href="{% static 'styles-insta.css' %}">
     </head>
     <body>
+
         <header>
             <h1>PopChat</h1>
+            <nav>
+                {% if profile %}
+                <a href="{% url 'feed' pk=profile.pk %}">Home</a>
+                <a href="{% url 'search' pk=profile.pk %}">Search</a>
+                <a href="{% url 'create_post' pk=profile.pk %}">New Post</a>
+                <a href="{% url 'profile' pk=profile.pk %}">Profile</a>
+                {% else %}
+                <a href="{% url 'profiles' %}">Home</a>
+                {% endif %}
+            </nav>
         </header>
-    
-    {% block content %}
-    {% endblock %}    
-  
+
+        {% block content %}
+        {% endblock %}
+
     </body>
 </html>

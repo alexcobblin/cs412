@@ -1,0 +1,46 @@
+{% extends 'mini_insta/base.html' %}
+<h1>Post by {{post.profile.display_name}}</h1>
+
+{% block content %}
+<main class="grid-container">
+
+    <article class="featured">
+        <div>
+        <h3>{{post.get_likes.count}} Likes</h3>
+        <h2>{{post.caption}}</h2>
+        <strong>by {{post.profile.display_name}} at {{post.timestamp}}</strong>
+        <p>
+            <a href="{% url 'update_post' post.pk %}">Update</a>
+            &nbsp;|&nbsp;
+            <a href="{% url 'delete_post' post.pk %}">Delete</a>
+        </p>
+        <p><a href="{% url 'profile' pk=post.profile.pk %}">&larr; Back to Profile</a></p>
+        </div>
+    </article>
+
+    {% for photo in post.get_all_photos %}
+    <article>
+        <img src="{{photo.get_image_url}}" alt="{{photo.get_image_url}}">
+    </article>
+
+    {% endfor %}
+
+    <div>
+    <h2>Comments</h2>
+
+
+    {% for comment in post.get_all_comments %}
+    <article>
+        <div>
+        <strong>by {{comment.profile.display_name}} at {{comment.timestamp}}</strong>
+        <p>
+        {{comment.text}}
+        </p>
+        </div>
+    </article>
+
+    {% endfor %}
+    </div>
+
+</main>
+{% endblock %}

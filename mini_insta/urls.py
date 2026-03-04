@@ -1,11 +1,20 @@
 from django.urls import path
-from .views import ShowAllView, ArticleView, RandomArticleView, ProfileListView, ProfileView # our view class definition 
- 
- 
+from .views import *
+
+
 urlpatterns = [
     # map the URL (empty string) to the view
     path('', ProfileListView.as_view(), name="profiles"),
     path('profile/<int:pk>', ProfileView.as_view(), name="profile"),
+    path('profile/<int:pk>/update', UpdateProfileView.as_view(), name='update_profile'),
+    path('profile/<int:pk>/create_post', CreatePostView.as_view(), name='create_post'),
+    path('profile/<int:pk>/followers', ShowFollowersDetailView.as_view(), name='followers'),
+    path('profile/<int:pk>/following', ShowFollowingDetailView.as_view(), name='following'),
+    path('profile/<int:pk>/feed', PostFeedListView.as_view(), name='feed'),
+    path('profile/<int:pk>/search', SearchView.as_view(), name='search'),
+    path('post/<int:pk>', PostDetailView.as_view(), name='post'),
+    path('post/<int:pk>/update', UpdatePostView.as_view(), name='update_post'),
+    path('post/<int:pk>/delete', DeletePostView.as_view(), name='delete_post'),
     path('show_all', ShowAllView.as_view(), name="show_all"),
-    path('article/<int:pk>', ArticleView.as_view(), name='article'), # show one article ### NEW
+    path('article/<int:pk>', ArticleView.as_view(), name='article'),
 ]
