@@ -1,0 +1,81 @@
+<form action="" method="GET">
+    <table>
+        <tr>
+            <th>Party:</th>
+            <td>
+                <select name="party_affil">
+                    <option value="">Any</option>
+                    <option value="D " {% if request.GET.party_affil == 'D ' %}selected{% endif %}>Democrat</option>
+                    <option value="R " {% if request.GET.party_affil == 'R ' %}selected{% endif %}>Republican</option>
+                    <option value="U " {% if request.GET.party_affil == 'U ' %}selected{% endif %}>Unenrolled</option>
+                    <option value="G " {% if request.GET.party_affil == 'G ' %}selected{% endif %}>Green</option>
+                    <option value="L " {% if request.GET.party_affil == 'L ' %}selected{% endif %}>Libertarian</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Min Birth Year:</th>
+            <td>
+                <select name="min_dob">
+                    <option value="">Any</option>
+                    <option value="1920" {% if request.GET.min_dob == '1920' %}selected{% endif %}>1920</option>
+                    <option value="1930" {% if request.GET.min_dob == '1930' %}selected{% endif %}>1930</option>
+                    <option value="1940" {% if request.GET.min_dob == '1940' %}selected{% endif %}>1940</option>
+                    <option value="1950" {% if request.GET.min_dob == '1950' %}selected{% endif %}>1950</option>
+                    <option value="1960" {% if request.GET.min_dob == '1960' %}selected{% endif %}>1960</option>
+                    <option value="1970" {% if request.GET.min_dob == '1970' %}selected{% endif %}>1970</option>
+                    <option value="1980" {% if request.GET.min_dob == '1980' %}selected{% endif %}>1980</option>
+                    <option value="1990" {% if request.GET.min_dob == '1990' %}selected{% endif %}>1990</option>
+                    <option value="2000" {% if request.GET.min_dob == '2000' %}selected{% endif %}>2000</option>
+                    <option value="2010" {% if request.GET.min_dob == '2010' %}selected{% endif %}>2010</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Max Birth Year:</th>
+            <td>
+                <select name="max_dob">
+                    <option value="">Any</option>
+                    <option value="1920" {% if request.GET.max_dob == '1920' %}selected{% endif %}>1920</option>
+                    <option value="1930" {% if request.GET.max_dob == '1930' %}selected{% endif %}>1930</option>
+                    <option value="1940" {% if request.GET.max_dob == '1940' %}selected{% endif %}>1940</option>
+                    <option value="1950" {% if request.GET.max_dob == '1950' %}selected{% endif %}>1950</option>
+                    <option value="1960" {% if request.GET.max_dob == '1960' %}selected{% endif %}>1960</option>
+                    <option value="1970" {% if request.GET.max_dob == '1970' %}selected{% endif %}>1970</option>
+                    <option value="1980" {% if request.GET.max_dob == '1980' %}selected{% endif %}>1980</option>
+                    <option value="1990" {% if request.GET.max_dob == '1990' %}selected{% endif %}>1990</option>
+                    <option value="2000" {% if request.GET.max_dob == '2000' %}selected{% endif %}>2000</option>
+                    <option value="2010" {% if request.GET.max_dob == '2010' %}selected{% endif %}>2010</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Voter Score:</th>
+            <td>
+                <select name="voter_score">
+                    <option value="">Any</option>
+                    <option value="0" {% if request.GET.voter_score == '0' %}selected{% endif %}>0</option>
+                    <option value="1" {% if request.GET.voter_score == '1' %}selected{% endif %}>1</option>
+                    <option value="2" {% if request.GET.voter_score == '2' %}selected{% endif %}>2</option>
+                    <option value="3" {% if request.GET.voter_score == '3' %}selected{% endif %}>3</option>
+                    <option value="4" {% if request.GET.voter_score == '4' %}selected{% endif %}>4</option>
+                    <option value="5" {% if request.GET.voter_score == '5' %}selected{% endif %}>5</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Elections Voted In:</th>
+            <td>
+                <label><input type="checkbox" name="v20state" {% if request.GET.v20state %}checked{% endif %}> 2020 State</label>
+                <label><input type="checkbox" name="v21town" {% if request.GET.v21town %}checked{% endif %}> 2021 Town</label>
+                <label><input type="checkbox" name="v21primary" {% if request.GET.v21primary %}checked{% endif %}> 2021 Primary</label>
+                <label><input type="checkbox" name="v22general" {% if request.GET.v22general %}checked{% endif %}> 2022 General</label>
+                <label><input type="checkbox" name="v23town" {% if request.GET.v23town %}checked{% endif %}> 2023 Town</label>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Filter"></td>
+            <td><a href="{% url 'voters' %}">Clear</a></td>
+        </tr>
+    </table>
+</form>
