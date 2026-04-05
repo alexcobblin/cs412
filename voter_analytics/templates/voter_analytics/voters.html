@@ -5,8 +5,7 @@
     <h1>Voter List</h1>
 
     {% include 'voter_analytics/search.html' %}
-
-    <!-- pagination -->
+    
     {% if is_paginated %}
     <ul>
         {% if page_obj.has_previous %}

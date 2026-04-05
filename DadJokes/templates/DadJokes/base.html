@@ -1,0 +1,15 @@
+{% load static %}
+<html>
+    <head>
+        <title>Joke Pic</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <nav>
+        <a href="/DadJokes/">Home</a> |
+        <a href="/DadJokes/jokes">All Jokes</a> |
+        <a href="/DadJokes/pictures">All Pictures</a>
+    </nav>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</html>

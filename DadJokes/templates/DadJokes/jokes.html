@@ -1,0 +1,9 @@
+{% extends 'dadjokes/base.html' %}
+{% block content %}
+    <h1>All Dad Jokes</h1>
+    {% for joke in jokes %}
+        <p>{{ joke.text }}</p>
+        <p><em>{{ joke.contributor }} — {{ joke.published }}</em></p>
+        <hr>
+    {% endfor %}
+{% endblock %}

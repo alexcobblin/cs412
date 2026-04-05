@@ -1,0 +1,17 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+<main class="grid-container">
+    {% for picture in pictures %}
+    <joke class="featured">
+        {% if picture.url %}
+        <img src="{{ picture.url }}" alt="{{ picture.url }}">
+        {% endif %}
+
+        <div>
+        <strong>by {{ picture.contributor }} at {{ picture.published }}</strong>
+        </div>
+    </joke>
+    {% endfor %}
+</main>
+{% endblock %}
