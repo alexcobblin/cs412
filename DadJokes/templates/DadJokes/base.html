@@ -5,9 +5,9 @@
         <link rel="stylesheet" href="{% static 'styles.css' %}">
     </head>
     <nav>
-        <a href="/DadJokes/">Home</a> |
-        <a href="/DadJokes/jokes">All Jokes</a> |
-        <a href="/DadJokes/pictures">All Pictures</a>
+        <a href="{% url 'random' %}">Home</a> |
+        <a href="{% url 'jokes' %}">All Jokes</a> |
+        <a href="{% url 'pictures' %}">All Pictures</a>
     </nav>
     <hr>
     {% block content %}
