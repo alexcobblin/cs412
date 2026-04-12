@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "voter_analytics",
     "DadJokes",
     "rest_framework",
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +134,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL= "media/"  # note: no leading slash!
+MEDIA_URL= "media/"
 
 import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
@@ -142,7 +143,12 @@ if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/alcobb/static/'
     MEDIA_URL = '/alcobb/media/'
 
+
 REST_FRAMEWORK = {
-  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-  'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
+LOGIN_REDIRECT_URL = '/mini_insta/'

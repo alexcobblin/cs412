@@ -1,5 +1,7 @@
 from django.urls import path
 from .views import *
+from .views import UserRegistrationView, UserLoginView, ProfileListAPIView, ProfileDetailAPIView, ProfilePostsAPIView, ProfileFeedAPIView, CreatePostAPIView
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -17,4 +19,16 @@ urlpatterns = [
     path('post/<int:pk>/delete', DeletePostView.as_view(), name='delete_post'),
     path('show_all', ShowAllView.as_view(), name="show_all"),
     path('article/<int:pk>', ArticleView.as_view(), name='article'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    # auth API
+    path('api/login/', UserLoginView.as_view(), name='api_login'),
+    path('api/register/', UserRegistrationView.as_view(), name='register'),
+
+    # profile API
+    path('api/profiles/', ProfileListAPIView.as_view(), name='api_profiles'),
+    path('api/profiles/<int:pk>/', ProfileDetailAPIView.as_view(), name='api_profile'),
+    path('api/profiles/<int:pk>/posts/', ProfilePostsAPIView.as_view(), name='api_posts'),
+    path('api/profiles/<int:pk>/feed/', ProfileFeedAPIView.as_view(), name='api_feed'),
+    path('api/profiles/<int:pk>/posts/create/', CreatePostAPIView.as_view(), name='api_create_post'),
 ]
