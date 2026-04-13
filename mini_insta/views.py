@@ -12,11 +12,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
-from .serializers import UserSerializer
+from django.contrib.auth import authenticate, login
+from .serializers import UserSerializer, ArticleSerializer, PostSerializer, ProfileSerializer, FollowSerializer, PhotoSerializer, CreatePostSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import redirect
+from django.views import View
 
 class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -344,22 +347,6 @@ class PostDetailAPIView(DetailView):
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
 
-class CreatePostAPIView(CreateView):
-
-    form_class = CreatePostForm
-    template_name = 'mini_insta/create_post_form.html'
-
-    def get_context_data(self, **kwargs):
-        '''Return the dictionary of context variables for use in the template.'''
-
-        context = super().get_context_data(**kwargs)
-
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
-
-        context['profile'] = profile
-        return context
-
     def form_valid(self, form):
         '''This method handles the form submission and saves the
         new object to the Django database.
@@ -583,3 +570,21 @@ class CreatePostAPIView(APIView):
                 Photo.objects.create(post=post, image_file=f)
             return Response(PostSerializer(post).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class WebRegisterView(View):
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, 'mini_insta/register.html', {'form': form})
+
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Create a linked Profile with the same username
+            Profile.objects.create(
+                username=user.username,
+                display_name=user.username,
+                bio_text='',
+            )
+            login(request, user)
+            return redirect('profiles')
+        return render(request, 'mini_insta/register.html', {'form': form})
