@@ -52,3 +52,15 @@ hr {
     border: none;
     border-top: 1px solid #ddd;
 }
+joke.featured {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 8px;
+}
