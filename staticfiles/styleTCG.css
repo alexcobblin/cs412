@@ -1,0 +1,572 @@
+/* ============================================================
+   TradingCG — styleTCG.css
+   Place at: static/styleTCG.css
+   ============================================================ */
+
+/* --- Variables --- */
+:root {
+    --red: #e3350d;
+    --yellow: #ffcb05;
+    --blue: #003a8c;
+    --green: #27ae60;
+    --light: #f8f4ef;
+    --card-bg: #ffffff;
+    --border: #d0c8b8;
+    --text: #1a1a2e;
+    --muted: #888;
+    --danger: #c0392b;
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Base --- */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--light);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* --- Nav --- */
+nav {
+    background: var(--red);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    box-shadow: 0 3px 0 var(--blue);
+}
+
+nav .logo {
+    font-family: 'Press Start 2P', monospace;
+    color: var(--yellow);
+    font-size: 0.85rem;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav ul a {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+nav ul a:hover {
+    color: var(--yellow);
+}
+
+/* --- Main content area --- */
+main {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+/* --- Typography --- */
+h1, h2, h3 {
+    font-family: 'Press Start 2P', monospace;
+    line-height: 1.5;
+}
+
+h1 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--blue); }
+h2 { font-size: 0.85rem; margin-bottom: 1rem; color: var(--red); }
+h3 { font-size: 0.7rem; margin-bottom: 0.5rem; }
+
+p { line-height: 1.6; }
+
+.muted {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* --- Card --- */
+.card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 4px 4px 0 var(--border);
+}
+
+.card-success {
+    border-color: var(--green);
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-primary {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+}
+
+.btn-primary:hover {
+    background: #c42d0b;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 0 #8a1e08;
+}
+
+.btn-secondary {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+}
+
+.btn-secondary:hover {
+    background: #002a6a;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--red);
+    border-color: var(--red);
+}
+
+.btn-outline:hover {
+    background: var(--red);
+    color: white;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+.btn-danger:hover {
+    background: #a93226;
+    transform: translateY(-1px);
+}
+
+.btn-sm {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Actions row --- */
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+/* --- Grid --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* --- Listing card --- */
+.listing-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-thumbnail-placeholder {
+    width: 100%;
+    height: 200px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.caption { font-size: 0.9rem; }
+.byline { font-size: 0.8rem; }
+
+/* --- Badges --- */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.badge-yellow { background: var(--yellow); color: var(--text); }
+.badge-blue   { background: var(--blue);   color: white; }
+.badge-red    { background: var(--red);    color: white; }
+.badge-green  { background: var(--green);  color: white; }
+.badge-gray   { background: #ccc;          color: var(--text); }
+
+.badge-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.25rem 0;
+}
+
+/* --- Page header --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* --- Section heading with extra top space --- */
+.section-heading {
+    margin-top: 2rem;
+}
+
+/* --- Listing detail layout --- */
+.listing-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.listing-photos { }
+.listing-info { }
+
+/* --- Photo grid --- */
+.photo-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.photo-grid img {
+    width: 180px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid var(--border);
+    box-shadow: 3px 3px 0 var(--border);
+}
+
+/* --- Divider --- */
+.divider {
+    border: none;
+    border-top: 2px solid var(--border);
+    margin: 1rem 0;
+}
+
+/* --- Trade row --- */
+.trade-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 0.5rem;
+}
+
+.trade-row:last-child {
+    border-bottom: none;
+}
+
+/* --- Status row --- */
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* --- Profile header --- */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.profile-info { display: flex; flex-direction: column; gap: 0.4rem; }
+
+/* --- Contact grid (trade accepted) --- */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* --- Empty state --- */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+}
+
+.empty-state-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Forms --- */
+.form-card {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+.field-error {
+    color: var(--red);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* --- Alerts --- */
+.alert {
+    padding: 0.9rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .listing-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav ul {
+        gap: 1rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* ============================================================
+   Collection page
+   ============================================================ */
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.collection-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 4px 4px 0 var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.collection-card--listed {
+    border-color: var(--green);
+    box-shadow: 4px 4px 0 #c3e6cb;
+}
+
+.collection-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+/* Quantity controls */
+.quantity-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.qty-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.quantity-label {
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 2rem;
+    text-align: center;
+}
+
+/* Collection action row */
+.collection-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+/* Inline caption input inside list-for-trade form */
+.inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.caption-input {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.4rem 0.7rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+}
+
+.caption-input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+/* Section dividers between the three panels */
+.section-divider {
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.section-divider h2 {
+    margin-bottom: 0.25rem;
+}
+
+
+/* ============================================================
+   Selectable collection card (trade request page)
+   ============================================================ */
+
+.collection-select-card {
+    display: block;
+    cursor: pointer;
+}
+
+/* Hide the native radio button */
+.collection-select-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Highlight the card when its radio is checked */
+.collection-select-card input[type="radio"]:checked + .collection-card {
+    border-color: var(--blue);
+    box-shadow: 4px 4px 0 var(--blue);
+    background: #f0f4ff;
+}
+
+.collection-select-card:hover .collection-card {
+    border-color: var(--blue);
+}
