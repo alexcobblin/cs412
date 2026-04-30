@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TradingCG{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'TradingCG/style.css' %}">
+</head>
+<body>
+
+<nav>
+    <a class="logo" href="{% url 'all_listings' %}">TradingCG</a>
+    <ul>
+        <li><a href="{% url 'all_listings' %}">Listings</a></li>
+        <li><a href="{% url 'random_listing' %}">Random</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'collection' %}">My Collection</a></li>
+            {% if user.profile.pk %}
+                <li><a href="{% url 'show_user' user.profile.pk %}">My Profile</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Log In</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

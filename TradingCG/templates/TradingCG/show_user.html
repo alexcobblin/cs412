@@ -1,0 +1,91 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}{{ user.first_name }} {{ user.last_name }} — TradingCG{% endblock %}
+
+{% block content %}
+
+<div class="card profile-header">
+    <div class="profile-info">
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        {% if user.zip_code %}<p class="muted">📍 {{ user.zip_code }}</p>{% endif %}
+        {% if user.email %}<p class="muted">✉️ {{ user.email }}</p>{% endif %}
+        {% if user.phone_number %}<p class="muted">📞 {{ user.phone_number }}</p>{% endif %}
+    </div>
+    {% if profile and profile == user %}
+    <div class="actions">
+        <a href="{% url 'update_user' user.pk %}" class="btn btn-secondary">Edit Profile</a>
+    </div>
+    {% endif %}
+</div>
+
+<h2>{{ user.first_name }}'s Listings</h2>
+
+{% if listings %}
+<div class="grid">
+    {% for listing in listings %}
+    <div class="card listing-card">
+        {% with listing.get_front_photo as photo %}
+        {% if photo %}
+            <img class="card-thumbnail" src="{{ photo.get_image_url }}" alt="{{ listing.card.name }}">
+        {% endif %}
+        {% endwith %}
+        <div class="card-body">
+            <h3>{{ listing.card.name }}</h3>
+            <span class="badge badge-blue">{{ listing.get_condition_display }}</span>
+            <div class="actions">
+                <a href="{% url 'listing' listing.pk %}" class="btn btn-outline">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card empty-state">
+    <p class="muted">No listings yet.</p>
+    {% if profile and profile == user %}
+        <a href="{% url 'collection' %}" class="btn btn-primary">List a Card</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if profile and profile == user %}
+<h2 class="section-heading">Trade Requests Sent</h2>
+
+{% if sent_requests %}
+<div class="card">
+    {% for trade in sent_requests %}
+    <div class="trade-row">
+        <div>
+            <strong>{{ trade.listing.card.name }}</strong>
+            <span class="muted">from {{ trade.listing.user.first_name }} {{ trade.listing.user.last_name }}</span>
+            {% if trade.offered_card %}
+                <p class="muted">Offering: {{ trade.offered_card.card.name }}</p>
+            {% endif %}
+        </div>
+        {% if trade.status == 'accepted' %}
+            <span class="badge badge-green">Accepted</span>
+        {% elif trade.status == 'declined' %}
+            <span class="badge badge-gray">Declined</span>
+        {% elif trade.status == 'cancelled' %}
+            <span class="badge badge-gray">Cancelled</span>
+        {% else %}
+            <span class="badge badge-yellow">Pending</span>
+        {% endif %}
+        <div class="actions" style="margin-top:0;">
+            <a href="{% url 'show_trade' trade.pk %}" class="btn btn-outline btn-sm">View</a>
+            {% if trade.status == 'pending' %}
+                <a href="{% url 'cancel_trade' trade.pk %}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Cancel this trade request?')">Cancel</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card empty-state">
+    <p class="muted">No trade requests sent yet.</p>
+</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}

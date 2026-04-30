@@ -1,0 +1,32 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}{{ title }} — TradingCG{% endblock %}
+
+{% block content %}
+
+<a href="javascript:history.back()" class="btn btn-outline back-btn">← Back</a>
+
+<h1>{{ title }}</h1>
+
+<div class="card form-card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">{{ submit_label|default:"Save" }}</button>
+            <a href="javascript:history.back()" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

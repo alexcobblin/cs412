@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "DadJokes",
     "rest_framework",
     'rest_framework.authtoken',
+    "TradingCG",
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,4 @@ REST_FRAMEWORK = {
     ],
 }
 LOGIN_REDIRECT_URL = '/mini_insta/'
+LOGIN_URL = '/login/'

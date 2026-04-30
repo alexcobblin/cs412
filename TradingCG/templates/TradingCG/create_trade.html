@@ -1,0 +1,85 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}Request a Trade — TradingCG{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'listing' listing.pk %}" class="btn btn-outline back-btn">← Back to Listing</a>
+
+<h1>Request a Trade</h1>
+
+<!-- The listing they want -->
+<div class="card">
+    <h2>You want:</h2>
+    <p><strong>{{ listing.card.name }}</strong>
+        {% if listing.card.set_name %} · {{ listing.card.set_name }}{% endif %}
+    </p>
+    <div class="badge-row">
+        <span class="badge badge-blue">{{ listing.get_condition_display }}</span>
+        {% if listing.card.rarity %}
+            <span class="badge badge-yellow">{{ listing.card.rarity }}</span>
+        {% endif %}
+    </div>
+    <p class="muted">Listed by {{ listing.user.first_name }} {{ listing.user.last_name }}</p>
+</div>
+
+{% if already_requested %}
+<div class="card card-success">
+    <p>You've already sent a trade request for this listing.</p>
+    <a href="{% url 'show_user' profile.pk %}" class="btn btn-outline" style="margin-top:0.75rem;">View your requests</a>
+</div>
+
+{% elif collection %}
+<div class="card">
+    <h2>Select a card to offer:</h2>
+    <p class="muted">Pick one card from your collection to offer in exchange.</p>
+
+    {% if error %}
+        <p class="field-error">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="collection-grid">
+            {% for entry in collection %}
+            <label class="collection-select-card">
+                <input type="radio" name="offered_card" value="{{ entry.pk }}" required>
+                <div class="collection-card">
+                    <div class="collection-card-header">
+                        <div>
+                            <h3>{{ entry.card.name }}</h3>
+                            {% if entry.card.set_name %}
+                                <p class="muted">{{ entry.card.set_name }}</p>
+                            {% endif %}
+                        </div>
+                        {% if entry.is_listed %}
+                            <span class="badge badge-green">Listed</span>
+                        {% endif %}
+                    </div>
+                    <div class="badge-row">
+                        <span class="badge badge-blue">{{ entry.get_condition_display }}</span>
+                        {% if entry.card.rarity %}
+                            <span class="badge badge-yellow">{{ entry.card.rarity }}</span>
+                        {% endif %}
+                    </div>
+                    <p class="muted">{{ entry.quantity }}x owned</p>
+                </div>
+            </label>
+            {% endfor %}
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Send Trade Request</button>
+            <a href="{% url 'listing' listing.pk %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% else %}
+<div class="card empty-state">
+    <p class="muted">You have no cards in your collection to trade.</p>
+    <a href="{% url 'collection' %}" class="btn btn-primary">Add cards to your collection</a>
+</div>
+{% endif %}
+
+{% endblock %}

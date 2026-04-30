@@ -1,0 +1,192 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}My Collection — TradingCG{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>My Collection</h1>
+    <span class="muted">{{ collection|length }} card type{{ collection|length|pluralize }} in your collection</span>
+</div>
+
+<!-- ================================================================
+     SECTION 1: Cards you own
+     ================================================================ -->
+
+{% if collection %}
+<div class="collection-grid">
+    {% for entry in collection %}
+    <div class="collection-card {% if entry.is_listed %}collection-card--listed{% endif %}">
+
+        <div class="collection-card-header">
+            <div>
+                <h3>{{ entry.card.name }}</h3>
+                {% if entry.card.set_name %}
+                    <p class="muted">{{ entry.card.set_name }}</p>
+                {% endif %}
+            </div>
+            {% if entry.is_listed %}
+                <span class="badge badge-green">Listed</span>
+            {% else %}
+                <span class="badge badge-gray">Not Listed</span>
+            {% endif %}
+        </div>
+
+        <div class="badge-row">
+            {% if entry.card.rarity %}
+                <span class="badge badge-yellow">{{ entry.card.rarity }}</span>
+            {% endif %}
+            <span class="badge badge-blue">{{ entry.get_condition_display }}</span>
+        </div>
+
+        <!-- Quantity controls -->
+        <div class="quantity-row">
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="decrement_card">
+                <input type="hidden" name="collection_id" value="{{ entry.pk }}">
+                <button type="submit" class="qty-btn">−</button>
+            </form>
+
+            <span class="quantity-label">{{ entry.quantity }}x</span>
+
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add_card">
+                <input type="hidden" name="card_id" value="{{ entry.card.pk }}">
+                <input type="hidden" name="condition" value="{{ entry.condition }}">
+                <button type="submit" class="qty-btn">+</button>
+            </form>
+        </div>
+
+        <!-- Actions -->
+        <div class="collection-actions">
+            {% if entry.is_listed %}
+                <!-- View the listing -->
+                <a href="{% url 'listing' entry.get_listing.pk %}" class="btn btn-outline btn-sm">View Listing</a>
+                <!-- Unlist -->
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="unlist_card">
+                    <input type="hidden" name="collection_id" value="{{ entry.pk }}">
+                    <button type="submit" class="btn btn-secondary btn-sm">Remove from Trade</button>
+                </form>
+            {% else %}
+                <!-- List for trade -->
+                <form method="post" class="inline-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="list_card">
+                    <input type="hidden" name="collection_id" value="{{ entry.pk }}">
+                    <input type="text" name="caption" placeholder="Add a caption (optional)" class="caption-input">
+                    <button type="submit" class="btn btn-primary btn-sm">List for Trade</button>
+                </form>
+            {% endif %}
+
+            <!-- Remove from collection -->
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="remove_card">
+                <input type="hidden" name="collection_id" value="{{ entry.pk }}">
+                <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Remove {{ entry.card.name }} from your collection?')">
+                    Remove
+                </button>
+            </form>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="card empty-state">
+    <p class="empty-state-text">Your collection is empty.</p>
+    <p class="muted">Add cards below to get started.</p>
+</div>
+{% endif %}
+
+
+<!-- ================================================================
+     SECTION 2: Add a card from the existing catalog
+     ================================================================ -->
+
+<div class="section-divider">
+    <h2>Add a Card from the Catalog</h2>
+</div>
+
+<div class="card form-card">
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_card">
+
+        <div class="form-group">
+            <label for="card_id">Search the catalog</label>
+            <select name="card_id" id="card_id" required>
+                <option value="">— select a card —</option>
+                {% for card in all_cards %}
+                    <option value="{{ card.pk }}">{{ card.name }}{% if card.set_name %} · {{ card.set_name }}{% endif %}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="condition_existing">Condition</label>
+            <select name="condition" id="condition_existing">
+                {% for val, label in condition_choices %}
+                    <option value="{{ val }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Add to Collection</button>
+        </div>
+    </form>
+</div>
+
+
+<!-- ================================================================
+     SECTION 3: Add a brand-new card (not yet in the catalog)
+     ================================================================ -->
+
+<div class="section-divider">
+    <h2>Add a New Card</h2>
+    <p class="muted">Can't find your card above? Add it to the catalog here.</p>
+</div>
+
+<div class="card form-card">
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_new_card">
+
+        <div class="form-group">
+            <label for="name">Card Name</label>
+            <input type="text" name="name" id="name" placeholder="e.g. Charizard" required>
+        </div>
+
+        <div class="form-group">
+            <label for="set_name">Set Name</label>
+            <input type="text" name="set_name" id="set_name" placeholder="e.g. Base Set">
+        </div>
+
+        <div class="form-group">
+            <label for="rarity">Rarity</label>
+            <input type="text" name="rarity" id="rarity" placeholder="e.g. Rare Holo">
+        </div>
+
+        <div class="form-group">
+            <label for="condition_new">Condition</label>
+            <select name="condition" id="condition_new">
+                {% for val, label in condition_choices %}
+                    <option value="{{ val }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Add New Card</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

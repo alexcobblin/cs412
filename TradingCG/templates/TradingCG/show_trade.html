@@ -1,0 +1,60 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}Trade Request — PokéTrade{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'all_listings' %}" class="btn btn-outline back-btn">← Back to Listings</a>
+
+<h1>Trade Request</h1>
+
+<div class="card">
+    <h2>{{ trade.listing.card.name }}</h2>
+    <p class="muted">Listed by {{ trade.listing.user.first_name }} {{ trade.listing.user.last_name }}</p>
+    <p><strong>Requested by:</strong> {{ trade.requester.first_name }} {{ trade.requester.last_name }}</p>
+    <p><strong>Date:</strong> {{ trade.request_date|date:"M d, Y" }}</p>
+    <div class="status-row">
+        <strong>Status:</strong>
+        {% if trade.status == 'accepted' %}
+            <span class="badge badge-green">Accepted</span>
+        {% elif trade.status == 'declined' %}
+            <span class="badge badge-gray">Declined</span>
+        {% else %}
+            <span class="badge badge-yellow">Pending</span>
+        {% endif %}
+    </div>
+</div>
+
+{% if show_contact %}
+<div class="card card-success">
+    <div class="alert alert-success">🎉 Trade accepted! Here's how to get in touch with your trading partner.</div>
+    <div class="contact-grid">
+        <div>
+            <h2>{{ listing_user.first_name }} {{ listing_user.last_name }}</h2>
+            <p>✉️ {{ listing_user.email }}</p>
+            <p>📞 {{ listing_user.phone_number }}</p>
+            <p>📍 {{ listing_user.zip_code }}</p>
+        </div>
+        <div>
+            <h2>{{ requester.first_name }} {{ requester.last_name }}</h2>
+            <p>✉️ {{ requester.email }}</p>
+            <p>📞 {{ requester.phone_number }}</p>
+            <p>📍 {{ requester.zip_code }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if trade.status == 'pending' and request.user.profile == trade.listing.user %}
+<div class="card">
+    <h2>Respond to Request</h2>
+    <p class="muted">Review and respond to this trade request.</p>
+    <div class="actions">
+        <a href="{% url 'update_trade' trade.pk %}" class="btn btn-primary">
+            Review Trade Request
+        </a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

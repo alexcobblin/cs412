@@ -1,0 +1,31 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}Sign Up — PokéTrade{% endblock %}
+
+{% block content %}
+
+<h1>Sign Up</h1>
+
+<div class="card form-card">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+                <p class="field-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        {% if form.non_field_errors %}
+            <p class="field-error">{{ form.non_field_errors }}</p>
+        {% endif %}
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Create Account</button>
+            <a href="{% url 'login' %}" class="btn btn-outline">Already have an account?</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

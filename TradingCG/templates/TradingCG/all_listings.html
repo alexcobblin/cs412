@@ -1,0 +1,83 @@
+{% extends 'TradingCG/base.html' %}
+
+{% block title %}All Listings — TradingCG{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Available Trades</h1>
+    {% if user.is_authenticated %}
+        <a href="{% url 'create_listing' %}" class="btn btn-primary">+ List a Card</a>
+    {% endif %}
+</div>
+
+<p class="muted">
+    {{ listings|length }} card{{ listings|length|pluralize }} listed for trade
+    {% if profile and profile.latitude %}
+        — sorted by distance from {{ profile.zip_code }}
+    {% endif %}
+</p>
+
+{% if listings %}
+<div class="grid">
+    {% for listing in listings %}
+    <div class="card listing-card">
+
+        {% with listing.get_front_photo as photo %}
+        {% if photo %}
+            <img class="card-thumbnail" src="{{ photo.get_image_url }}" alt="{{ listing.card.name }}">
+        {% else %}
+            <div class="card-thumbnail-placeholder">No photo</div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="card-body">
+            <h3>{{ listing.card.name }}</h3>
+
+            {% if listing.card.set_name %}
+                <p class="muted">{{ listing.card.set_name }}</p>
+            {% endif %}
+
+            <div class="badge-row">
+                {% if listing.card.rarity %}
+                    <span class="badge badge-yellow">{{ listing.card.rarity }}</span>
+                {% endif %}
+                <span class="badge badge-blue">{{ listing.get_condition_display }}</span>
+            </div>
+
+            {% if listing.caption %}
+                <p class="caption">{{ listing.caption }}</p>
+            {% endif %}
+
+            <p class="muted byline">
+                by {{ listing.user.first_name }} {{ listing.user.last_name }}
+                {% if listing.distance %}
+                    · {{ listing.distance|floatformat:0 }} mi away
+                {% endif %}
+            </p>
+
+            <div class="actions">
+                <a href="{% url 'listing' listing.pk %}" class="btn btn-outline">View</a>
+
+                {% if user.is_authenticated and listing.user != profile %}
+                    <a href="{% url 'create_trade' listing.pk %}" class="btn btn-primary">Request Trade</a>
+                {% elif not user.is_authenticated %}
+                    <a href="{% url 'login' %}" class="btn btn-outline">Log in to Trade</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="card empty-state">
+    <p class="empty-state-text">No listings yet!</p>
+    {% if user.is_authenticated %}
+        <a href="{% url 'create_listing' %}" class="btn btn-primary">Be the first to list a card</a>
+    {% else %}
+        <a href="{% url 'signup' %}" class="btn btn-primary">Sign up to list a card</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

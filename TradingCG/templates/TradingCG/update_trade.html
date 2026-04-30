@@ -1,0 +1,9 @@
+<form method="POST" class="actions">
+    {% csrf_token %}
+    <button name="status" value="accepted" class="btn btn-success">
+        Accept Trade
+    </button>
+    <button name="status" value="declined" class="btn btn-danger">
+        Decline
+    </button>
+</form>
